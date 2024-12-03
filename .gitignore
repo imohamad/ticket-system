@@ -1,0 +1,14 @@
+node_modules
+dist
+.nuxt
+.DS_Store
+.idea
+coverage
+*-coverage
+*.log
+.nyc_output
+.env*.local
+tsconfig.tsbuildinfo
+stats.html
+.vite-ssg-temp
+.vite-ssg-dist
