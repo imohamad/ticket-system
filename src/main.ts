@@ -1,7 +1,8 @@
 import generatedRoutes from 'virtual:generated-pages'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { createPinia } from 'pinia'
-import { ViteSSG } from 'vite-ssg'
+// import { ViteSSG } from 'vite-ssg'
+import { createSSRApp } from 'vue'
 import App from './App.vue'
 
 import '@unocss/reset/tailwind.css'
@@ -9,18 +10,22 @@ import 'uno.css'
 
 const routes = setupLayouts(generatedRoutes)
 
-export const createApp = ViteSSG(
-  App,
-  { routes },
-  ({ app, router, initialState }) => {
-    const pinia = createPinia()
-    app.use(pinia)
-    app.use(router)
-    app.use(i18n)
+// export const createApp = ViteSSG(
+//   App,
+//   { routes },
+//   ({ app, router, initialState }) => {
+//     const pinia = createPinia()
+//     app.use(pinia)
+//     app.use(router)
+//     app.use(i18n)
 
-    if (import.meta.env.SSR)
-      initialState.pinia = pinia.state.value
-    else
-      pinia.state.value = initialState.pinia || {}
-  },
-)
+//     if (import.meta.env.SSR)
+//       initialState.pinia = pinia.state.value
+//     else
+//       pinia.state.value = initialState.pinia || {}
+//   },
+// )
+export function createApp() {
+  const app = createSSRApp(App, { routes })
+  return { app }
+}
